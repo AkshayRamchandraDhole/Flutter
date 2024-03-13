@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 
-class DreamCompany extends StatefulWidget{
+class DreamCompany1 extends StatefulWidget{
 
-  const DreamCompany({super.key});
+  const DreamCompany1({super.key});
 
   @override
   State createState() => _DreamCompanyState();
@@ -16,13 +16,22 @@ class _DreamCompanyState extends State{
 
   bool showEmployeeDetails = false;
 
+
   void showEmpDetails(){
     showEmployeeDetails = true;
     setState(() {
-        
     });
     
 
+  }
+
+  void clearEmpDetails(){
+    companyNameController.clear();
+    empNameController.clear();
+    locationController.clear();
+    setState(() {
+      //showEmployeeDetails = false;
+    });
   }
   @override
   Widget build(BuildContext context){
@@ -116,38 +125,54 @@ class _DreamCompanyState extends State{
             height: 20,
           ),
 
+          ElevatedButton(
+           onPressed: clearEmpDetails, 
+            child: const Text("Clear"),
+            ),
+
+            const SizedBox(
+            height: 20,
+          ),
+
           if(showEmployeeDetails == true)
               Column(
-                  children: [
-                    Text("Name: ${empNameController.text}",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.purpleAccent
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text("Company Name: ${companyNameController.text}",
-                          style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.purpleAccent
-                      ),
-                    ),
-                     const SizedBox(height: 5),
-                    Text("Location: ${locationController.text}",
+                    children: [
+                      Text("Name: ${empNameController.text}",
                         style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                       color: Colors.purpleAccent
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.purpleAccent
+                        ),
                       ),
-                    )
-                  ],
-              )
+                      const SizedBox(height: 5),
+                      Text("Company Name: ${companyNameController.text}",
+                            style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.purpleAccent
+                        ),
+                      ),
+                       const SizedBox(height: 5),
+                      Text("Location: ${locationController.text}",
+                          style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                         color: Colors.purpleAccent
+                        ),
+                      )
+                    ],
+                )
           
           
         ],
-        )
+        ),
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){},
+          child: const Icon(Icons.add,
+          color: Colors.red,
+          ),
+          ),
     );
   }
 }
