@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:google_fonts/google_fonts.dart';
-//import 'package:intl/intl.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MainApp());
@@ -36,32 +36,96 @@ class ToDoModelClass{
     required this.description,
     required this.date
   });
-}
-class _ToDoAppState extends State{
+}class _ToDoAppState extends State{
 
   List <ToDoModelClass> cardList = [
-    ToDoModelClass(title: "Instagram API", description: "Backend Team la contact kra", date: "Feb 36 2024")
+    ToDoModelClass(title: "Instagram API", description: "Backend Team la contact kra", date: "Feb 26 2024")
   ];
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+
+  bool doEdit = false;
+
+  //submit method while click on submit it will run
+
+  void submit(bool doEdit,[ToDoModelClass? todoModelObj]){
+
+    if(titleController.text.trim().isNotEmpty &&
+        descriptionController.text.trim().isNotEmpty &&
+        dateController.text.trim().isNotEmpty
+    ){
+      if(!doEdit){
+        setState(() {
+          cardList.add(
+            ToDoModelClass(
+              title: titleController.text.trim(), 
+              description: descriptionController.text.trim(), 
+              date: dateController.text.trim())
+          );
+        });
+      }else{
+            setState(() {
+              todoModelObj!.title = titleController.text.trim();
+              todoModelObj.description = titleController.text.trim();
+              todoModelObj.date = dateController.text.trim();
+            });
+      }
+    }
+    clearController();
+  }
+
+// to clear the value from controller
+  void clearController(){
+    titleController.clear();
+    descriptionController.clear();
+    dateController.clear();
+  }
+
+  // delete the todo card once we click on delete icon
+
+  void deleteCard(ToDoModelClass toDoModelObj){
+    setState(() {
+      cardList.remove(toDoModelObj);
+    });
+  }
+
+    // edit the to do card when we click on edit icon
+
+    void editCard(ToDoModelClass toDoModelobj){
+      titleController.text = toDoModelobj.title;
+      descriptionController.text = toDoModelobj.description;
+      dateController.text = toDoModelobj.date;
+
+      showBottomSheet(true,toDoModelobj);
+    }
+
+    @override
+    void dispose(){
+      super.dispose();
+      titleController.dispose();
+      descriptionController.dispose();
+      dateController.dispose();
+    }
   
-  void showBottomSheet(){
+  void showBottomSheet(bool doEdit,[ToDoModelClass? toDoModelObj]){
 
     showModalBottomSheet(
-      context: context, 
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true, 
       builder: (BuildContext context){
         return Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
 
           child: Column(
             children: [
-             const  Text("Create Task",
-               // style: GoogleFonts.quicksand(
-               //   fonstWeight : FontWeight.w800,
-               //   fontSize: 22
-               // ),
+               Text("Create Task",
+                style: GoogleFonts.quicksand(
+                fontWeight : FontWeight.w800,
+                  fontSize: 22
+                ),
               ),
 
               const SizedBox(
@@ -72,10 +136,10 @@ class _ToDoAppState extends State{
                  crossAxisAlignment: CrossAxisAlignment.start, 
                 children: [
                   Text("Title",
-                    // style: GoogleFonts.quicksand(
-               //   fonstWeight : FontWeight.w500,
-               //   fontSize: 12
-               // ),
+                    style: GoogleFonts.quicksand(
+                fontWeight : FontWeight.w500,
+                 fontSize: 12
+               ),
                   ),
 
                   const SizedBox(
@@ -96,10 +160,10 @@ class _ToDoAppState extends State{
                   ),
 
                   Text("Description",
-                    // style: GoogleFonts.quicksand(
-               //   fonstWeight : FontWeight.w500,
-               //   fontSize: 12
-               // ),
+                     style: GoogleFonts.quicksand(
+                 fontWeight : FontWeight.w500,
+                 fontSize: 12
+               ),
                   ),
 
                   const SizedBox(
@@ -120,11 +184,11 @@ class _ToDoAppState extends State{
                     height: 10,
                   ),
 
-                  Text("Date",
-                    // style: GoogleFonts.quicksand(
-               //   fonstWeight : FontWeight.w500,
-               //   fontSize: 12
-               // ),
+                   Text("Date",
+                      style: GoogleFonts.quicksand(
+                      fontWeight : FontWeight.w500,
+                      fontSize: 12
+                      ),
                   ),
 
                   const SizedBox(
@@ -139,19 +203,21 @@ class _ToDoAppState extends State{
                         ),
                         
                         ),
-                        //suffixIcon: Icon(Icon.calender_month_outline,)
+                        suffixIcon: Icon(Icons.calendar_month_outlined)
                     ),
                     readOnly: true,
                     onTap: () async{
+                      
                       DateTime? pickedDate = await showDatePicker(
                         context: context, 
                         initialDate: DateTime.now(),
                          firstDate: DateTime(2024), 
                          lastDate: DateTime(2025),
-                        //String formatDate = DateFormat.yMMMd().format(pickedDate!);
+                        
                          );
+                         String formatDate = DateFormat.yMMMd().format(pickedDate!);
                          setState(() {
-                           //dateController.text = formateDate;
+                           dateController.text = formatDate;
                          });
                     },
                   ),
@@ -164,7 +230,14 @@ class _ToDoAppState extends State{
                 ],
               ),
               ElevatedButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                    if(!doEdit){
+                      submit(doEdit);
+                    }else{
+                      submit(doEdit,toDoModelObj);
+                      Navigator.of(context).pop();
+                    }
+                  }, 
                   style: const ButtonStyle(
                     backgroundColor:  MaterialStatePropertyAll(
                       Color.fromRGBO(2, 167, 177, 1)
@@ -243,31 +316,33 @@ class _ToDoAppState extends State{
               width: 10,
             ),
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  cardList[index].title,
-                  // style: GoogleFonts.quicksand(
-                  //       FontWeight: FontWeight.w600,
-                  //       fontSize: 14,
-                  // ),
-                ),
-
-                const SizedBox(
-                  height: 10,
-                ),
-
-                Text(
-                  cardList[index].description,
-                  // style: GoogleFonts.quicksand(
-                  //       FontWeight: FontWeight.w600,
-                  //       fontSize: 12,
-                  // ),
-                ),
-
-
-              ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    cardList[index].title,
+                    style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                    ),
+                  ),
+              
+                  const SizedBox(
+                    height: 10,
+                  ),
+              
+                  Text(
+                    cardList[index].description,
+                     style: GoogleFonts.quicksand(
+                           fontWeight: FontWeight.w600,
+                           fontSize: 12,
+                     ),
+                  ),
+              
+              
+                ],
+              ),
             ),
 
             // Row2 
@@ -275,10 +350,10 @@ class _ToDoAppState extends State{
               children: [
                 Text(
                   cardList[index].date,
-                  // style: GoogleFonts.quicksand(
-                  //       FontWeight: FontWeight.w500,
-                  //       fontSize: 12,
-                 // ),
+                   style: GoogleFonts.quicksand(
+                         fontWeight: FontWeight.w500,
+                         fontSize: 12,
+                  ),
                 ),
 
                 const Spacer(),
@@ -287,7 +362,9 @@ class _ToDoAppState extends State{
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        editCard(cardList[index]);
+                      },
 
                       child: const Icon(
                         Icons.edit_note_outlined,
@@ -296,7 +373,9 @@ class _ToDoAppState extends State{
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        deleteCard(cardList[index]);
+                      },
 
                       child: const Icon(
                         Icons.delete_outline_outlined,
@@ -323,9 +402,10 @@ class _ToDoAppState extends State{
 
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-            showBottomSheet();
+            clearController();
+            showBottomSheet(doEdit);
           },
-          backgroundColor: Color.fromRGBO(2, 167, 177, 1),
+          backgroundColor: const Color.fromRGBO(2, 167, 177, 1),
           child: const Text("ADD"),
           ),
     );
