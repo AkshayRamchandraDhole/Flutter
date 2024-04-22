@@ -36,7 +36,8 @@ class ToDoModelClass{
     required this.description,
     required this.date
   });
-}class _ToDoAppState extends State{
+}
+class _ToDoAppState extends State{
 
   List <ToDoModelClass> cardList = [
     ToDoModelClass(title: "Instagram API", description: "Backend Team la contact kra", date: "Feb 26 2024")
