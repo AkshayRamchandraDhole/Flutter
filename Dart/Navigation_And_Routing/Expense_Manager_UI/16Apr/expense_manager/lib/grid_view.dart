@@ -26,9 +26,12 @@ class _GridViewScreenState extends State{
           itemCount: 4,
          itemBuilder: (context, index) {
            return Container(
-            height: 100,
-            width: 100,
-              color: Colors.black,
+            height: 150,
+            width: 143,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+               // color: 
+              ),
            );
          }),
          floatingActionButton: FloatingActionButton(onPressed: () {
