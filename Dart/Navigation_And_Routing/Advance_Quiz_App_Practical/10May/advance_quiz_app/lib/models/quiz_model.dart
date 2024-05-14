@@ -14,6 +14,9 @@ class ProductModel{
     "B"
     "S"
   ];
+  
+
+  
 
   // FETCH DATA FROM SUBJECT
   void getSubjectData(int index){

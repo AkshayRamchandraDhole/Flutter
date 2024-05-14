@@ -14,6 +14,9 @@ class _DrawerScreenState extends State{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: (){},
+          icon: const Icon(Icons.menu,)),
         title: const Text("Category"),
       ),
       drawer:  Drawer(

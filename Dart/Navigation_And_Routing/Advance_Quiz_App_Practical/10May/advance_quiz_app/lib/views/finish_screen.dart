@@ -21,7 +21,7 @@ class _FinishScreenState extends State<FinishScreen>{
                     fit: BoxFit.cover,
                     ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
                   height: 50,
@@ -111,7 +111,8 @@ class _FinishScreenState extends State<FinishScreen>{
                       )
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      //mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Column(
                           children: [
@@ -160,7 +161,26 @@ class _FinishScreenState extends State<FinishScreen>{
                           
                           ],
                         ),
-                        
+                        const SizedBox(
+                         // width: 280,
+                          
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center ,
+                          children: [
+                          CircularPercentIndicator(
+                                 radius: 20.0,
+                                 lineWidth: 5.0,
+                                 percent: 0.8,
+                                 center: const Text("80%"),
+                                progressColor: Colors.green,
+                                animation: true,
+                                curve: Curves.easeInBack,
+                                startAngle: 45.0,
+                                //arcType: ArcType.FULL_REVERSED,
+                          )
+                          ]
+                        )
                                            
                     
                     
@@ -207,7 +227,7 @@ class _FinishScreenState extends State<FinishScreen>{
                                       height: 5,
                                     ),
                                     Text(
-                                      "20",
+                                      "5",
                                       textAlign: TextAlign.start,
                                      style: GoogleFonts.dmSans(
                                         textStyle: const TextStyle(
@@ -259,7 +279,7 @@ class _FinishScreenState extends State<FinishScreen>{
                                       height: 5,
                                     ),
                                     Text(
-                                      "16",
+                                      "5",
                                       textAlign: TextAlign.start,
                                      style: GoogleFonts.dmSans(
                                         textStyle: const TextStyle(

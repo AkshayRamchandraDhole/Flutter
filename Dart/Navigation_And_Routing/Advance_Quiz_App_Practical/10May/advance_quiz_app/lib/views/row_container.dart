@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:advance_quiz_app/views/question_screen.dart';
 // LIST OF SUBJECT
   List listofSubject = [
     "Math",
@@ -17,7 +18,34 @@ import 'package:google_fonts/google_fonts.dart';
     "B",
     "S"
   ];
-
+    int questionIndex = 0;
+List<Map> allQuestions = [
+    {
+      "questions":"Who is the founder of Microsoft?",
+      "options" : ["Steve Jobs","Jeff Bezos","Bill Gates","Elon Musk"],
+      "answerIndex":2,
+    },
+    {
+      "questions":"Who is the founder of Apple?",
+      "options" : ["Steve Jobs","Jeff Bezos","Bill Gates","Elon Musk"],
+      "answerIndex":0,
+    },
+    {
+      "questions":"Who is the founder of Amazon?",
+      "options" : ["Steve Jobs","Jeff Bezos","Bill Gates","Elon Musk"],
+      "answerIndex":1,
+    },
+    {
+      "questions":"Who is the founder of Tesla?",
+      "options" : ["Steve Jobs","Jeff Bezos","Bill Gates","Elon Musk"],
+      "answerIndex":3,
+    },
+    {
+      "questions":"Who is the founder of Google?",
+      "options" : ["Steve Jobs","Lary Page","Bill Gates","Elon Musk"],
+      "answerIndex":1,
+    }
+  ];
 Row getRowContainer(int index){
   return Row(
                       children: [
@@ -72,7 +100,12 @@ Row getRowContainer(int index){
                                 // ),
                                 const Spacer(),
                                 IconButton(
-                                  onPressed: (){},
+                                  onPressed: (){
+                                
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    //   return const QuestionScreen();
+                                    // }));
+                                  },
                                   icon: const Icon(
                                     Icons.arrow_forward
                                   ),
@@ -107,7 +140,7 @@ Row getanswerRow(){
                       ),
                       ),
                       child: Text(
-                        "19 years",
+                        "${allQuestions[questionIndex]["options"][0]}",
                         style: GoogleFonts.dmSans(
                               textStyle: const TextStyle(
                                           color:  Color.fromRGBO(255, 255, 255, 1),

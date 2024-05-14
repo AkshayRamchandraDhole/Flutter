@@ -1,3 +1,4 @@
+import 'package:advance_quiz_app/views/question_screen.dart';
 import 'package:advance_quiz_app/views/row_container.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,7 +85,13 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
               getRowContainer(4),
              
-              
+              ElevatedButton(
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return const QuestionScreen();
+                  }));
+                }, 
+              child: const Text("New page"))
               
              
 
