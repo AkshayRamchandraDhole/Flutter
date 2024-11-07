@@ -57,18 +57,18 @@ class _QuizAppState extends State{
   int selectedAnswerIndex = -1;
   int correctedAnswers = 0;
 
-  MaterialStateProperty<Color?> checkAnswer(int answerIndex){
+  WidgetStateProperty<Color?> checkAnswer(int answerIndex){
     if(selectedAnswerIndex != -1){
       if(answerIndex == allQuestions[currentQuestionIndex]["correctAnswer"]){
-        return const MaterialStatePropertyAll(Colors.green);
+        return const WidgetStatePropertyAll(Colors.green);
       }else if(selectedAnswerIndex == answerIndex){
-        return const MaterialStatePropertyAll(Colors.red);
+        return const WidgetStatePropertyAll(Colors.red);
       }else{
-        return const MaterialStatePropertyAll(null);
+        return const WidgetStatePropertyAll(null);
       }
 
     }else {
-     return const MaterialStatePropertyAll(null);
+     return const WidgetStatePropertyAll(null);
     }
   }
 
